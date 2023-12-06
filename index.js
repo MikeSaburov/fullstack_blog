@@ -2,6 +2,8 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 
+import { registerValidation } from './validations/auth.js';
+
 //Подключение к базе данных (MongoDB)
 mongoose
   .connect(
@@ -18,7 +20,7 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/auth/register', (req, res) => {});
+app.post('/auth/register', registerValidation, (req, res) => {});
 
 app.listen(4444, (err) => {
   if (err) {
