@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import { validationResult } from 'express-validator';
 import { registerValidation } from './validations/auth.js';
 
+import userModel from './models/User.js';
+
 //Подключение к базе данных (MongoDB)
 mongoose
   .connect(
@@ -26,6 +28,14 @@ app.post('/auth/register', registerValidation, (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json(errors.array());
   }
+
+  const doc = new userModel({
+    email: req.body.email,
+    passwordHash: req.body.password,
+    fullName: req.body.fullName,
+    avatarUrl: req.body.avatarUrl,
+  });
+
   res.json({ success: true });
 });
 
