@@ -24,11 +24,14 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/auth/register', registerValidation, (req, res) => {
+app.post('/auth/register', registerValidation, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json(errors.array());
   }
+
+  const password = req.body.password;
+  const salt = await bcrypt.genSalt(10);
 
   const doc = new userModel({
     email: req.body.email,
