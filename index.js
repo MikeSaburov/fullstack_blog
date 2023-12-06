@@ -1,5 +1,6 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 
 import { validationResult } from 'express-validator';
