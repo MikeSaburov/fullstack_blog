@@ -42,6 +42,8 @@ app.post('/auth/register', registerValidation, async (req, res) => {
     avatarUrl: req.body.avatarUrl,
   });
 
+  const user = await doc.save();
+
   res.json({ success: true });
 });
 
