@@ -11,7 +11,7 @@ import userModel from './models/User.js';
 //Подключение к базе данных (MongoDB)
 mongoose
   .connect(
-    'mongodb+srv://admin:sms12021985@cluster1.gtaa1oc.mongodb.net/?retryWrites=true&w=majority'
+    'mongodb+srv://admin:sms12021985@cluster1.gtaa1oc.mongodb.net/blog?retryWrites=true&w=majority'
   )
   .then(() => {
     console.log('DB Ok');
@@ -37,14 +37,14 @@ app.post('/auth/register', registerValidation, async (req, res) => {
 
   const doc = new userModel({
     email: req.body.email,
-    passwordHash,
     fullName: req.body.fullName,
     avatarUrl: req.body.avatarUrl,
+    passwordHash,
   });
 
   const user = await doc.save();
 
-  res.json({ success: true });
+  res.json(user);
 });
 
 app.listen(4444, (err) => {
