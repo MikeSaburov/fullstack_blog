@@ -28,5 +28,5 @@ export const postCreateValidation = [
     })
     .isString(),
   body('tags', 'Неверный формат тэгов(укажите массив)').optional().isString(),
-  body('imageUrl', 'Неверная ссылка на изображение').optional().isString(),
+  body('imageUrl', 'Неверная ссылка на изображение').optional().isURL(),
 ];
