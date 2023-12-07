@@ -118,6 +118,12 @@ app.post('/auth/register', registerValidation, async (req, res) => {
   }
 });
 
+//Получение информации о себе
+app.get('/auth/me', async (req, res) => {
+  try {
+  } catch (err) {}
+});
+
 app.listen(4444, (err) => {
   if (err) {
     return console.log(err);
