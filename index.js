@@ -43,7 +43,7 @@ app.post('/auth/login', async (req, res) => {
     );
 
     if (!isValidPass) {
-      return req.status(404).json({ message: 'Неверный логин или пароль' });
+      return res.status(404).json({ message: 'Неверный логин или пароль' });
     }
 
     //создаем токен
