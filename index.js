@@ -49,7 +49,7 @@ app.post('/auth/register', registerValidation, async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      message: 'Не удалось зарегестироваться',
+      message: 'Не удалось зарегестрироваться',
     });
   }
 });
