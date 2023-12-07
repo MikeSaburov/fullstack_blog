@@ -23,7 +23,7 @@ const app = express();
 app.use(express.json());
 
 //Авторизация пользователя
-app.post('/auth/login', UserController.login);
+app.post('/auth/login', loginValidation, UserController.login);
 
 //Регистрация пользователя
 app.post('/auth/register', registerValidation, UserController.register);
