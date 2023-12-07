@@ -7,6 +7,7 @@ import { validationResult } from 'express-validator';
 import { registerValidation } from './validations/auth.js';
 
 import userModel from './models/User.js';
+import checkAuth from './utils/checkAuth.js';
 
 //Подключение к базе данных (MongoDB)
 mongoose
@@ -119,9 +120,26 @@ app.post('/auth/register', registerValidation, async (req, res) => {
 });
 
 //Получение информации о себе
-app.get('/auth/me', async (req, res) => {
+app.get('/auth/me', checkAuth, async (req, res) => {
   try {
-  } catch (err) {}
+    const user = await userModel.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({
+        message: 'Нет такого пользователя',
+      });
+    }
+    const { passwordHash, ...userData } = user._doc;
+
+    res.json({
+      ...userData,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Нет доступа',
+    });
+  }
 });
 
 app.listen(4444, (err) => {
