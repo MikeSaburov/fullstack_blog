@@ -33,7 +33,7 @@ app.post('/auth/login', async (req, res) => {
 
     //проверка есть ли такой пользователь в БД
     if (!user) {
-      return req.status(404).json({ message: 'Неверный логин или пароль' });
+      return res.status(404).json({ message: 'Неверный логин или пароль' });
     }
 
     //проверка совпадают ли пароли
