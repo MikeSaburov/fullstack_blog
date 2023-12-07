@@ -24,6 +24,54 @@ const app = express();
 
 app.use(express.json());
 
+//Авторизация пользователя
+app.post('/auth/login', async (req, res) => {
+  try {
+    const user = await userModel.findOne({
+      email: req.body.email,
+    });
+
+    //проверка есть ли такой пользователь в БД
+    if (!user) {
+      return req.status(404).json({ message: 'Неверный логин или пароль' });
+    }
+
+    //проверка совпадают ли пароли
+    const isValidPass = await bcrypt.compare(
+      req.body.password,
+      user._doc.passwordHash
+    );
+
+    if (!isValidPass) {
+      return req.status(404).json({ message: 'Неверный логин или пароль' });
+    }
+
+    //создаем токен
+    const token = jwt.sign(
+      {
+        _id: user._id,
+      },
+      'secret123',
+      {
+        expiresIn: '30d',
+      }
+    );
+
+    const { passwordHash, ...userData } = user._doc;
+
+    res.json({
+      ...userData,
+      token,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Не удалось авторизоваться',
+    });
+  }
+});
+
+//Регистрация пользователя
 app.post('/auth/register', registerValidation, async (req, res) => {
   try {
     const errors = validationResult(req);
