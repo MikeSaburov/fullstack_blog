@@ -1,4 +1,3 @@
-import { json } from 'express';
 import PostModel from '../models/Post.js';
 
 //Получение всех статей
@@ -58,11 +57,11 @@ export const getOne = async (req, res) => {
 export const remove = async (req, res) => {
   try {
     const postId = req.params.id;
-    PostModel.findOneAndDelete({ _id: postId }).then((err, doc) => {
+    PostModel.findOneAndDelete({ _id: postId }).then((doc, err) => {
       if (err) {
         console.log(err);
         return res.status(500).json({
-          message: 'Не удалось удалить статью',
+          message: 'Не удалось ',
         });
       }
       if (!doc) {
