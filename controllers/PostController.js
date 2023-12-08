@@ -1,5 +1,6 @@
 import { json } from 'express';
 import PostModel from '../models/Post.js';
+
 //Получение всех статей
 export const getAll = async (req, res) => {
   try {
