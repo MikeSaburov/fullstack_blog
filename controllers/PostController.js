@@ -1,4 +1,4 @@
-import PostModel from '../models/Post';
+import PostModel from '../models/Post.js';
 
 export const create = async (req, res) => {
   try {
@@ -9,9 +9,9 @@ export const create = async (req, res) => {
       tags: req.body.tags,
       user: req.userId,
     });
+    const post = await doc.save();
 
     res.json(post);
-    const post = await doc.save();
   } catch (err) {
     console.log(err);
     res.status(500).json({
