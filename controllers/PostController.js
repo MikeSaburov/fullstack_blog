@@ -54,6 +54,35 @@ export const getOne = async (req, res) => {
   }
 };
 
+//Удаление статьи
+export const remove = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    PostModel.findOneAndDelete({ _id: postId }).then((err, doc) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          message: 'Не удалось удалить статью',
+        });
+      }
+      if (!doc) {
+        console.log(err);
+        return res.status(500).json({
+          message: 'Не удалось найти статью',
+        });
+      }
+      res.json({
+        success: true,
+      });
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Не удалось удалить статью!',
+    });
+  }
+};
+
 //Создание статьи
 export const create = async (req, res) => {
   try {
