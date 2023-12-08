@@ -10,7 +10,6 @@ const PostShema = new mongoose.Schema(
     text: {
       type: String,
       require: true,
-      unique: true,
     },
     tags: {
       type: Array,
