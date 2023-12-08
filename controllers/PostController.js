@@ -1,5 +1,18 @@
 import PostModel from '../models/Post.js';
+//Получение всех статей
+const getAll = async (req, res) => {
+  try {
+    const posts = await PostModel.find();
+    req.json(posts);
+  } catch (error) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Не удалось получить статьи',
+    });
+  }
+};
 
+//Создание статьи
 export const create = async (req, res) => {
   try {
     const doc = new PostModel({
