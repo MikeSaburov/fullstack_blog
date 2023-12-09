@@ -28,7 +28,7 @@ mongoose
 //создаем хранилище для хранения картинок
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
-    cb(null, 'upoloads');
+    cb(null, 'uploads');
   },
   filename: (_, file, cb) => {
     cb(null, file.originalname);
@@ -40,6 +40,7 @@ const upload = multer({ storage });
 const app = express();
 
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 /**РОУТЫ ДЛЯ ПОЛЬЗОВАТЕЛЯ */
 //Авторизация пользователя
