@@ -10,8 +10,7 @@ import {
 } from './validations.js';
 import checkAuth from './utils/checkAuth.js';
 
-import * as UserController from './controllers/UserController.js';
-import * as PostController from './controllers/PostController.js';
+import { UserController, PostController } from './controllers/index.js';
 import handleValidationErrors from './utils/handleValidationErrors.js';
 
 //Подключение к базе данных (MongoDB)
