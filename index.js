@@ -12,6 +12,7 @@ import checkAuth from './utils/checkAuth.js';
 
 import * as UserController from './controllers/UserController.js';
 import * as PostController from './controllers/PostController.js';
+import handleValidationErrors from './utils/handleValidationErrors.js';
 
 //Подключение к базе данных (MongoDB)
 mongoose
@@ -44,10 +45,20 @@ app.use('/uploads', express.static('uploads'));
 
 /**РОУТЫ ДЛЯ ПОЛЬЗОВАТЕЛЯ */
 //Авторизация пользователя
-app.post('/auth/login', loginValidation, UserController.login);
+app.post(
+  '/auth/login',
+  loginValidation,
+  handleValidationErrors,
+  UserController.login
+);
 
 //Регистрация пользователя
-app.post('/auth/register', registerValidation, UserController.register);
+app.post(
+  '/auth/register',
+  registerValidation,
+  handleValidationErrors,
+  UserController.register
+);
 
 //Получение информации о себе
 app.get('/auth/me', checkAuth, UserController.getMe);
@@ -73,7 +84,13 @@ app.get('/posts', PostController.getAll);
 app.get('/posts/:id', PostController.getOne);
 
 //Создание статьи
-app.post('/posts', checkAuth, postCreateValidation, PostController.create);
+app.post(
+  '/posts',
+  checkAuth,
+  postCreateValidation,
+  handleValidationErrors,
+  PostController.create
+);
 
 /*Удаление статьи*/
 app.delete('/posts/:id', checkAuth, PostController.remove);
