@@ -2,6 +2,7 @@ import express, { json } from 'express';
 import mongoose from 'mongoose';
 
 import multer from 'multer';
+import cors from 'cors';
 
 import {
   registerValidation,
@@ -40,6 +41,7 @@ const upload = multer({ storage });
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 app.use('/uploads', express.static('uploads'));
 
 /**РОУТЫ ДЛЯ ПОЛЬЗОВАТЕЛЯ */
