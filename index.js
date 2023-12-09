@@ -41,6 +41,7 @@ const app = express();
 
 app.use(express.json());
 
+/**РОУТЫ ДЛЯ ПОЛЬЗОВАТЕЛЯ */
 //Авторизация пользователя
 app.post('/auth/login', loginValidation, UserController.login);
 
@@ -50,11 +51,36 @@ app.post('/auth/register', registerValidation, UserController.register);
 //Получение информации о себе
 app.get('/auth/me', checkAuth, UserController.getMe);
 
+/*-----------------------------------------------------*/
+
+/*РОУТЫ ДЛЯ КАРТИНОК*/
+
+/**Роутер загрузки картинки */
+app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+  res.json({
+    url: `/uploads/${req.file.originalname}`,
+  });
+});
+
+/**--------------------------------------------------- */
+
+/** РОУТЫ ДЛЯ СТАТЕЙ */
+//Получение всех статей
 app.get('/posts', PostController.getAll);
+
+//Получение одной статьи
 app.get('/posts/:id', PostController.getOne);
+
+//Создание статьи
 app.post('/posts', checkAuth, postCreateValidation, PostController.create);
+
+/*Удаление статьи*/
 app.delete('/posts/:id', checkAuth, PostController.remove);
+
+/** Изменение статьи */
 app.patch('/posts/:id', checkAuth, PostController.update);
+
+/**------------------------------------------------------- */
 
 app.listen(4444, (err) => {
   if (err) {
