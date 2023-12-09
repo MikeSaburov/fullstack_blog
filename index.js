@@ -1,6 +1,8 @@
 import express, { json } from 'express';
 import mongoose from 'mongoose';
 
+import multer from 'multer';
+
 import {
   registerValidation,
   loginValidation,
@@ -22,6 +24,18 @@ mongoose
   .catch((err) => {
     console.log('Ошибка подключения к DB', err);
   });
+
+//создаем хранилище для хранения картинок
+const storage = multer.diskStorage({
+  destination: (_, __, cb) => {
+    cb(null, 'upoloads');
+  },
+  filename: (_, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
 
 const app = express();
 
