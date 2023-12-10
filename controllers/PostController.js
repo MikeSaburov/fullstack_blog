@@ -9,8 +9,8 @@ export const getLastTags = async (req, res) => {
       .map((obj) => obj.tags)
       .flat()
       .slice(0, 5);
-
-    res.json(tags);
+    const uniqueTags = new Set(tags);
+    res.json(Array.from(uniqueTags));
   } catch (err) {
     console.log(err);
     res.status(500).json({
