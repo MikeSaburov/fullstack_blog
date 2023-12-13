@@ -49,21 +49,23 @@ export const getOne = async (req, res) => {
       {
         returnDocument: 'after',
       }
-    ).then((doc, err) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({
-          message: 'Не удалось',
-        });
-      }
+    )
+      .then((doc, err) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            message: 'Не удалось',
+          });
+        }
 
-      if (!doc) {
-        return res.status(404).json({
-          message: 'Такой статьи больше не существует',
-        });
-      }
-      res.json(doc);
-    });
+        if (!doc) {
+          return res.status(404).json({
+            message: 'Такой статьи больше не существует',
+          });
+        }
+        res.json(doc);
+      })
+      .populate('user');
   } catch (err) {
     console.log(err);
     res.status(500).json({
